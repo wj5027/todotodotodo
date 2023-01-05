@@ -1,24 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import New from './pages/New';
+import ToDo from './pages/ToDo';
+import Edit from './pages/Edit';
+
+import ToDoEditor from './components/ToDoEditor';
+import MyFooter from './components/MyFooter';
+
+const reducer = (state, action) => {
+  let newState = [];
+
+  switch (action) {
+    case "INIT": {
+      return action.data;
+    }
+
+    case "CREATE": {
+      break;
+    }
+
+    case "REMOVE": {
+      break;
+    }
+
+    case "EDIT": {
+      break;
+    }
+    default:
+      return state;
+  }
+
+  return newState;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/edit" element={<Edit />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/todo" element={<ToDo />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+
   );
 }
 
