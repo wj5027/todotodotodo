@@ -1,3 +1,29 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0px;
+}
+
+@media (min-width : 650px) {
+  .App {
+    width: 640px;
+  }
+}
+
+@media (max-width : 650px) {
+  .App {
+    width: 90vw;
+  }
+}
+
+.App {
+  min-height: 100vh;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 /* HEADER */
 header {
   padding-top: 20px;
@@ -39,4 +65,57 @@ header button {
 
   font-size: 18px;
 
+}
+
+/* ToDoList */
+.ToDoList .ToDoNewBtn {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  /* padding-right: 10px; */
+
+  display: flex;
+  justify-content: end;
+
+}
+
+/* ToDoItem */
+.ToDoItem {
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid #e2e2e2;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.ToDoItem .info_wrapper {
+  flex-grow: 1;
+  margin-left: 20px;
+  cursor: pointer;
+
+  display: flex;
+  /* justify-content: space-evenly; */
+
+}
+
+.ToDoItem .todo_date {
+  font-weight: bold;
+  font-size: 25px;
+
+  padding-right: 20px;
+}
+
+.ToDoItem .todo_preview {
+  font-size: 20px;
+}
+
+/* ToDoEditor */
+.ToDoEditor {
+  align-items: center;
+}
+
+.ToDoEditor .content {
+  display: flex;
+  align-items: center;
 }

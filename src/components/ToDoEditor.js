@@ -9,7 +9,7 @@ const ToDoEditor = ({ isEdit, originData }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="TodoEditor">
+        <div className="ToDoEditor">
             <MyHeader
                 headText={isEdit ? "할 일 수정" : "할 일 추가"}
                 leftChild={<MyButton text={"뒤로가기"}
@@ -18,8 +18,8 @@ const ToDoEditor = ({ isEdit, originData }) => {
                 rightChild={isEdit && <MyButton text={"삭제"}
                     onClick={""} />}
             />
-            <input placeholder="할 일을 추가해주세요"></input>
-        </div>
+            {/* <textarea className="content" placeholder="할 일을 추가해주세요" /> */}
+        </div >
     )
 }
 export default ToDoEditor;
