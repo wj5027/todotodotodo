@@ -15,7 +15,7 @@ import React from 'react';
 const reducer = (state, action) => {
   let newState = [];
 
-  switch (action) {
+  switch (action.type) {
     case "INIT": {
       return action.data;
     }
@@ -79,7 +79,7 @@ function App() {
     }
   ]
 
-  const dataId = useRef(0); //dataId 초기값 0
+  const dataId = useRef(6); //dataId 초기값 6
 
   //CREATE
   const onCreate = (date, content) => {
