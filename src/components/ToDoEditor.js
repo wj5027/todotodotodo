@@ -31,12 +31,20 @@ const ToDoEditor = ({ isEdit, originData }) => {
         navigate('/', { replace: true });
     }
 
+    const handleRemove = () => {
+        if (window.confirm("삭제 하시겠습니까?")) {
+            onRemove(originData.id);
+            navigate('/', { replace: true });
+        }
+    }
+
     useEffect(() => {
         if (isEdit) {
             setDate(getStringDate(new Date(parseInt(originData.date))));
+            setContent(originData.content);
 
         }
-    }, []);
+    }, [isEdit, originData]);
 
     return (
         <div className="ToDoEditor">
@@ -46,7 +54,7 @@ const ToDoEditor = ({ isEdit, originData }) => {
                     onClick={() => navigate(-1)}
                 />}
                 rightChild={isEdit && <MyButton text={"삭제"}
-                    onClick={""} />}
+                    onClick={handleRemove} />}
             />
             <section>
                 <div className="input_box">

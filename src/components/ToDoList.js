@@ -3,7 +3,6 @@ import MyButton from "./MyButtons";
 import ToDoItem from "./ToDoItem";
 
 const ToDoList = ({ toDoList }) => {
-
     const navigate = useNavigate();
 
     const getSortedList = () => {
@@ -12,6 +11,7 @@ const ToDoList = ({ toDoList }) => {
         }
         const copyList = JSON.parse(JSON.stringify(toDoList));
         const sortedList = copyList.sort(compare);
+
         return sortedList;
     }
 
@@ -19,7 +19,7 @@ const ToDoList = ({ toDoList }) => {
         <div className="ToDoList">
 
             {getSortedList().map((it) => (
-                <ToDoItem key={it.id} {...it} />
+                <ToDoItem key={it.id}  {...it} />
             ))}
             <div className="ToDoNewBtn">
                 <MyButton text={"할 일 추가"} onClick={() => navigate('/new')} />

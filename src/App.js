@@ -8,9 +8,10 @@ import Edit from './pages/Edit';
 
 import ToDoEditor from './components/ToDoEditor';
 import MyFooter from './components/MyFooter';
-import { useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
 import React from 'react';
+import axios from 'axios';
 
 const reducer = (state, action) => {
   let newState = [];
@@ -39,46 +40,48 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-
+  //localStorage.setItem('todo', JSON.stringify(newState));
   return newState;
 }
 export const ToDoStateContext = React.createContext();
 export const ToDoDispatchContext = React.createContext();
 
 function App() {
-  const dummyData = [
-    {
-      id: 1,
-      emotion: 1,
-      content: "할 일 1번",
-      date: 1673008252332
-    },
-    {
-      id: 2,
-      emotion: 2,
-      content: "할 일 2번",
-      date: 1673008252333
-    },
-    {
-      id: 3,
-      emotion: 3,
-      content: "할 일 3번",
-      date: 1673008252334
-    },
-    {
-      id: 4,
-      emotion: 4,
-      content: "할 일 4번",
-      date: 1673008252335
-    },
-    {
-      id: 5,
-      emotion: 5,
-      content: "할 일 5번",
-      date: 1673008252336
-    }
-  ]
 
+  // useEffect(() => {
+  //   const post = {
+  //     id: "idddd"
+  //   };
+  //   console.log(post.id);
+  //   fetch("http://localhost:3001/idplz", {
+  //     method: "post", // 통신방법
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(post),
+  //   });
+  // }, [])
+
+  useEffect(() => {
+    fetch("http://localhost:3001/toDoList", {
+      method: "post", // 통신방법
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((res => res.json()))
+      .then((json) => {
+        const selectedData = JSON.stringify(json);
+
+        if (selectedData) {
+          const todoList = JSON.parse(selectedData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+          dataId.current = parseInt(selectedData[0].id) + 1;
+
+          dispatch({ type: "INIT", data: todoList });
+        }
+      })
+  }, [])
+
+  const [data, dispatch] = useReducer(reducer, []);
   const dataId = useRef(6); //dataId 초기값 6
 
   //CREATE
@@ -110,7 +113,7 @@ function App() {
       }
     })
   }
-  const [data, dispatch] = useReducer(reducer, dummyData);
+
 
   return (
     <ToDoStateContext.Provider value={data}>

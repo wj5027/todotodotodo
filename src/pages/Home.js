@@ -31,7 +31,9 @@ const Home = () => {
             0
         ).getTime();
 
-        setData(toDoList.filter((it) => firstDay <= it.date && it.date <= lastDay));
+        setData(toDoList.filter((it) =>
+            firstDay <= new Date(it.todo_date) && new Date(it.todo_date) <= lastDay));
+
     }, [toDoList, curDate]);
 
     const increaseMonth = () => {
