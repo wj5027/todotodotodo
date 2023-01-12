@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useActionData } from 'react-router-dom';
 
 import Home from './pages/Home';
 import New from './pages/New';
@@ -11,7 +11,6 @@ import MyFooter from './components/MyFooter';
 import { useEffect, useReducer, useRef } from 'react';
 
 import React from 'react';
-import axios from 'axios';
 
 const reducer = (state, action) => {
   let newState = [];
@@ -23,6 +22,22 @@ const reducer = (state, action) => {
 
     case "CREATE": {
       newState = [action.data, ...state];
+      const todo = {
+        id: action.data.id,
+        todo_date: action.data.todo_date,
+        content: action.data.content
+      }
+
+      fetch("http://localhost:3001/insertToDo", {
+        method: "post", // 통신방법
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      }).then((res) => res.json())
+        .then((json) => {
+        });
+
       break;
     }
 
@@ -40,27 +55,13 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-  //localStorage.setItem('todo', JSON.stringify(newState));
+
   return newState;
 }
 export const ToDoStateContext = React.createContext();
 export const ToDoDispatchContext = React.createContext();
 
 function App() {
-
-  // useEffect(() => {
-  //   const post = {
-  //     id: "idddd"
-  //   };
-  //   console.log(post.id);
-  //   fetch("http://localhost:3001/idplz", {
-  //     method: "post", // 통신방법
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify(post),
-  //   });
-  // }, [])
 
   useEffect(() => {
     fetch("http://localhost:3001/toDoList", {
@@ -74,8 +75,8 @@ function App() {
 
         if (selectedData) {
           const todoList = JSON.parse(selectedData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
-          dataId.current = parseInt(selectedData[0].id) + 1;
-
+          //dataId.current = parseInt(selectedData[0].id) + 1;
+          dataId.current = parseInt(todoList[0].id) + 1;
           dispatch({ type: "INIT", data: todoList });
         }
       })
@@ -90,11 +91,10 @@ function App() {
       type: "CREATE",
       data: {
         id: dataId.current,
-        date: new Date(date).getTime(),
+        todo_date: date,
         content
       }
     })
-    dataId.current += 1;
   }
 
   //REMOVE

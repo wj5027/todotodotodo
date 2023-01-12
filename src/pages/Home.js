@@ -14,7 +14,7 @@ const Home = () => {
     const [data, setData] = useState([]);
 
     const [curDate, setCurDate] = useState(new Date());
-    const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
+    const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월의 할 일`;
 
     const navigate = useNavigate();
 

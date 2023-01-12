@@ -22,10 +22,24 @@ app.get('/', (req, res) => {
     res.send('서버연결성공');
 })
 
+app.post("/insertToDo", (req, res) => {
+    const content = req.body.content;
+    const todo_date = req.body.todo_date;
+    var params = [content, todo_date];
+
+    connection.query("INSERT INTO todo (id, content, todo_date) VALUES ((select max(a.id)+1 as id from todo a), ?,? )", params,
+        function (err, rows, fields) {
+            if (err) {
+                console.log("INSERT 실패:: " + err);
+            } else {
+                console.log("INSERT 성공");
+            }
+        })
+});
 
 
 app.post("/toDoList", (req, res) => {
-    connection.query("SELECT id, content, DATE_FORMAT(TODO_DATE,'%Y-%m-%d') AS todo_date FROM TODO",
+    connection.query("SELECT id, content, DATE_FORMAT(TODO_DATE,'%Y-%m-%d') AS todo_date FROM TODO order by todo_date desc",
         function (err, rows, fields) {
             if (err) {
                 console.log("조회 실패:: " + err);
@@ -34,7 +48,9 @@ app.post("/toDoList", (req, res) => {
                 res.send(rows);
             }
         })
-})
+});
+
+
 
 app.listen(port, () => {
     console.log(`Connect at http://localhost:${port}`);

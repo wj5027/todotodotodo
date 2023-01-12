@@ -32,7 +32,7 @@ const ToDo = () => {
     } else {
         return (
             <div className="ToDoPage">
-                <Myheader headText={`${getStringDate(new Date(data.date))}`}
+                <Myheader headText={`${getStringDate(new Date(data.todo_date))}`}
                     leftChild={<MyButton text={"< 뒤로"}
                         onClick={() => navigate(-1)}
                     />}

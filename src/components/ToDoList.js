@@ -7,12 +7,11 @@ const ToDoList = ({ toDoList }) => {
 
     const getSortedList = () => {
         const compare = (a, b) => {
-            return parseInt(b.date) - parseInt(a.date);
+            return new Date(b.todo_date) - new Date(a.todo_date);
         }
         const copyList = JSON.parse(JSON.stringify(toDoList));
         const sortedList = copyList.sort(compare);
-
-        return sortedList;
+        return copyList;
     }
 
     return (
