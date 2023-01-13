@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 import MyButton from "./MyButtons";
 import ToDoItem from "./ToDoItem";
 
-const ToDoList = ({ toDoList }) => {
+import React from "react";
+
+const ToDoList = React.memo(({ toDoList }) => {
     const navigate = useNavigate();
 
     const getSortedList = () => {
@@ -25,7 +27,7 @@ const ToDoList = ({ toDoList }) => {
             </div>
         </div>
     )
-};
+});
 
 ToDoList.defaultProps = {
     toDoList: [],

@@ -29,7 +29,7 @@ const reducer = (state, action) => {
       }
 
       fetch("http://localhost:3001/insertToDo", {
-        method: "post", // 통신방법
+        method: "post",
         headers: {
           "content-type": "application/json",
         },
@@ -42,7 +42,21 @@ const reducer = (state, action) => {
     }
 
     case "REMOVE": {
-      newState = state.filter((it) => it.id !== action.targetId)
+      newState = state.filter((it) => it.id !== action.targetId);
+
+      const todo = {
+        id: action.targetId,
+      }
+      fetch("http://localhost:3001/deleteToDo", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      }).then((res) => res.json())
+        .then((json) => {
+        });
+
       break;
     }
 
@@ -50,6 +64,23 @@ const reducer = (state, action) => {
       newState = state.map((it) =>
         it.id === action.data.id ?
           { ...action.data } : it);
+
+      const todo = {
+        id: action.data.id,
+        todo_date: action.data.todo_date,
+        content: action.data.content
+      }
+
+      fetch("http://localhost:3001/updateToDo", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      }).then((res) => res.json())
+        .then((json) => {
+        });
+
       break;
     }
     default:
@@ -108,7 +139,7 @@ function App() {
       type: "EDIT",
       data: {
         id: targetId,
-        date: new Date(date).getTime(),
+        todo_date: date,
         content
       }
     })

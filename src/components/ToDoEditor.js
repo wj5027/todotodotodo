@@ -25,6 +25,7 @@ const ToDoEditor = ({ isEdit, originData }) => {
             if (!isEdit) {  //추가일 경우
                 onCreate(date, content);
             } else {  //수정일 경우
+                //console.log("ToDoEditor의 data:" + originData.id, date, content);
                 onEdit(originData.id, date, content);
             }
         }
@@ -40,7 +41,7 @@ const ToDoEditor = ({ isEdit, originData }) => {
 
     useEffect(() => {
         if (isEdit) {
-            setDate(getStringDate(new Date(parseInt(originData.date))));
+            setDate(getStringDate(new Date(originData.todo_date)));
             setContent(originData.content);
 
         }

@@ -20,6 +20,11 @@ const ToDo = () => {
             );
             if (targetToDo) { //할 일 존재
                 setData(targetToDo);
+
+                const titleElement = document.getElementsByTagName('title')[0];
+                titleElement.innerHTML = `${targetToDo.todo_date.substring(0, 4)}년 
+                                        ${targetToDo.todo_date.substring(5, 7)}월 
+                                        ${targetToDo.todo_date.substring(8, 10)}일의 할 일`;
             } else {  //할 일 없을 때
                 alert("할 일이 존재하지 않습니다.");
                 navigate('/', { replace: true });

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import MyButton from "./MyButtons";
 
+import React from "react";
 
 const ToDoItem = ({ id, content, todo_date }) => {
     //const strDate = new Date(parseInt(date)).toLocaleDateString();
@@ -32,4 +33,4 @@ const ToDoItem = ({ id, content, todo_date }) => {
     )
 };
 
-export default ToDoItem;
+export default React.memo(ToDoItem);

@@ -22,10 +22,11 @@ app.get('/', (req, res) => {
     res.send('서버연결성공');
 })
 
+// INSERT
 app.post("/insertToDo", (req, res) => {
     const content = req.body.content;
     const todo_date = req.body.todo_date;
-    var params = [content, todo_date];
+    const params = [content, todo_date];
 
     connection.query("INSERT INTO todo (id, content, todo_date) VALUES ((select max(a.id)+1 as id from todo a), ?,? )", params,
         function (err, rows, fields) {
@@ -37,6 +38,37 @@ app.post("/insertToDo", (req, res) => {
         })
 });
 
+// UPDATE
+app.post("/updateToDo", (req, res) => {
+    const id = req.body.id;
+    const content = req.body.content;
+    const todo_date = req.body.todo_date.replaceAll("-", "");
+    const params = [content, todo_date, id];
+
+    connection.query("UPDATE todo SET content =? , todo_date =? WHERE id=?", params,
+        function (err, rows, fields) {
+            if (err) {
+                console.log("UPDATE 실패:: " + err);
+            } else {
+                console.log("UPDATE 성공");
+            }
+        })
+});
+
+// DELETE
+app.post("/deleteToDo", (req, res) => {
+    const id = req.body.id;
+    const params = [id];
+
+    connection.query("DELETE FROM todo WHERE id=?", params,
+        function (err, rows, fields) {
+            if (err) {
+                console.log("DELETE 실패:: " + err);
+            } else {
+                console.log("DELETE 성공");
+            }
+        })
+});
 
 app.post("/toDoList", (req, res) => {
     connection.query("SELECT id, content, DATE_FORMAT(TODO_DATE,'%Y-%m-%d') AS todo_date FROM TODO order by todo_date desc",
